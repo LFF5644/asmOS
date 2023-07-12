@@ -1,6 +1,6 @@
 global _start
 section .data
-	msg db "Hello World", 0x0a
+	msg db "Hello World", 0xA, 0x7
 	len equ $ -msg
 
 section .text
