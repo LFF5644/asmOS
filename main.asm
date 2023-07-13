@@ -2,6 +2,7 @@ org 0x7C00
 bits 16
 
 %define ENDL 0xD, 0xA
+%define BEL 0x7
 
 start:
 	jmp main
@@ -10,7 +11,7 @@ puts:
 	push si
 	push ax
 
-.loop
+.loop:
 	lodsb
 	or al, al
 	jz .done
@@ -42,10 +43,20 @@ main:
 	jmp .halt
 
 .halt:
+	mov si, msg_hlt
+	call puts
+
+	
 	hlt
+
+	mov si, msg_resume
+	call puts
+
 	jmp .halt
 
-msg_hello: db "Hello World! This System is made by LFF5644", ENDL, 0
+msg_hello: db "Hello World! This System is made by LFF5644", ENDL
+msg_hlt: db "System pausiert!", ENDL
+msg_resume: db "System wake up!", ENDL
 
 times 510-($-$$) db 0
 dw 0AA55h
